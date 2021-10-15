@@ -3,9 +3,9 @@
 #include <iostream>
 
 int main(void) {
+  std::cout << "Starting..." << std::endl;
+
   GLFWwindow *window;
-  std::cout << glGetString(GL_VERSION) << std::endl;
-  std::cout << "Hello, world" << std::endl;
 
   /* Initialize the library */
   if (!glfwInit())
@@ -18,9 +18,11 @@ int main(void) {
     return -1;
   }
 
-
   /* Make the window's context current */
+  /* THIS IS A VALID GL CONTEXT STARTING NOW */
   glfwMakeContextCurrent(window);
+
+  std::cout << glGetString(GL_VERSION) << std::endl;
 
   /* Loop until the user closes the window */
   while (!glfwWindowShouldClose(window)) {
