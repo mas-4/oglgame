@@ -15,7 +15,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILER_COMMANDS ON)
 set(CMAKE_BUILD_TYPE Debug)
 
-# dependencies directory
+# directories
 set(deps ${CMAKE_SOURCE_DIR}/dependencies)
 set(src_dir ${CMAKE_SOURCE_DIR}/src)
 
@@ -28,6 +28,13 @@ set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
+# including subdirectories
 add_subdirectory(${glfw_dir})
 add_subdirectory(${glew_dir}/build/cmake)
 add_subdirectory(${src_dir})
+
+add_executable(oglgame ${src_dir}/main.cpp)
+target_link_libraries(oglgame glfw glew)
+target_include_directories(oglgame PUBLIC
+    ${glfw_dir}/include
+    ${glew_dir}/include)
