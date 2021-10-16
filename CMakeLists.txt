@@ -33,9 +33,20 @@ add_subdirectory(${glfw_dir})
 add_subdirectory(${glew_dir}/build/cmake)
 add_subdirectory(${src_dir})
 
-add_executable(oglgame ${src_dir}/main.cpp)
+set(TARGET_H
+    ${src_dir}/Renderer.h
+    ${src_dir}/IndexBuffer.h
+    ${src_dir}/VertexBuffer.h
+)
+
+set(TARGET_SRC
+    ${src_dir}/main.cpp
+    ${src_dir}/Renderer.cpp
+    ${src_dir}/IndexBuffer.cpp
+    ${src_dir}/VertexBuffer.cpp)
+
+add_executable(oglgame ${TARGET_SRC})
 target_link_libraries(oglgame glfw glew)
 target_include_directories(oglgame PUBLIC
     ${glfw_dir}/include
-    ${glew_dir}/include
-    include)
+    ${glew_dir}/include)

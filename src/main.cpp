@@ -1,11 +1,15 @@
-#include "gl_debug.h"
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <sstream>
 #include <csignal>
 
+#include "Renderer.h"
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
+
 #define BASIC_SHADER "../res/shaders/basic.shader"
+
 struct ShaderProgramSource
 {
     std::string VertexSource;
@@ -139,20 +143,13 @@ int main(void)
     GLCall(glGenVertexArrays(1, &vao));
     GLCall(glBindVertexArray(vao));
 
-    /* initialize the vertex buffer */
-    unsigned int buffer_id;
-    GLCall(glGenBuffers(1, &buffer_id));
-    GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer_id));
-    GLCall(glBufferData(GL_ARRAY_BUFFER, 4 * 2 * sizeof(float), positions, GL_STATIC_DRAW));
+    VertexBuffer vb(positions, 4 * 2 * sizeof(float));
 
     // here we bind the array buffer to the currently bound vertex array
     GLCall(glEnableVertexAttribArray(0));
     GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0));
 
-    unsigned int ibo;
-    GLCall(glGenBuffers(1, &ibo));
-    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
-    GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW));
+    IndexBuffer ib(indices, 6);
 
     // set up the shader
     ShaderProgramSource source = parse_shader(BASIC_SHADER);
@@ -184,7 +181,7 @@ int main(void)
 
         /* bind vertices, indices buffers */
         GLCall(glBindVertexArray(vao));
-        GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
+        ib.Bind();
 
         /* draw */
         GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
