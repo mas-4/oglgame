@@ -6,8 +6,28 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <csignal>
 
 #define BASIC_SHADER "../res/shaders/basic.shader"
+
+#define ASSERT(x) if (!(x)) raise(SIGTRAP);
+
+static void GLClearError()
+{
+    while (glGetError() != GL_NO_ERROR)
+        ;
+}
+
+static bool GLLogCall()
+{
+    while (GLenum error = glGetError())
+    {
+        std::cerr << "[OpenGL Error] (" << error << ")" << std::endl;
+        return false;
+
+    }
+    return true;
+}
 
 struct ShaderProgramSource
 {
@@ -44,7 +64,7 @@ static ShaderProgramSource parse_shader(const std::string &file_path)
         }
         else
         {
-            ss[(int)type] << line << '\n';
+            ss[(int)type] << line << std::endl;
         }
     }
 
@@ -67,11 +87,11 @@ static unsigned int compile_shader(unsigned int type, const std::string &source)
         glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
         char *message = (char *)alloca(length * sizeof(char));
         glGetShaderInfoLog(id, length, &length, message);
-        std::cout << "Failed to compile shader! " << (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << std::endl;
-        std::cout << "Source:\n"
+        std::cerr << "Failed to compile shader! " << (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << std::endl;
+        std::cerr << "Source:\n"
                   << "=======\n"
                   << source << std::endl;
-        std::cout << message << std::endl;
+        std::cerr << message << std::endl;
         glDeleteShader(id);
         return -1;
     }
@@ -161,7 +181,9 @@ int main(void)
     {
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+        GLClearError();
+        glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr);
+        ASSERT(GLLogCall());
 
         glfwSwapBuffers(window);
         glfwPollEvents();
