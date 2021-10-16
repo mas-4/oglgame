@@ -41,8 +41,7 @@ static ShaderProgramSource parse_shader(const std::string& file_path)
         else
         {
             ss[(int)type] << line << std::endl;
-        }
-    }
+        } }
 
     return { ss[0].str(), ss[1].str() };
 }
