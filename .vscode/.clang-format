@@ -1,0 +1,3 @@
+ArrayInitializerAlignmentStyle: Right
+InsertTrailingCommas: Wrapped
+Cpp11BracedListStyle: false # doesn't seem to do anything
