@@ -51,7 +51,7 @@ static ShaderProgramSource parse_shader(const std::string &file_path)
 /* Compiles a shader, `source`,  of type `type` and returns the id */
 static unsigned int compile_shader(unsigned int type, const std::string &source)
 {
-    unsigned int id = glCreateShader(type);
+    GLCall(unsigned int id = glCreateShader(type));
     const char *src = source.c_str();
     GLCall(glShaderSource(id, 1, &src, 0));
     GLCall(glCompileShader(id));
@@ -110,6 +110,7 @@ int main(void)
         return -1;
     }
     glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
 
     /* Initialize glew */
     if (glewInit() != GLEW_OK)
@@ -153,12 +154,25 @@ int main(void)
     unsigned int shader = create_shader(source.VertexSource, source.FragmentSource);
     GLCall(glUseProgram(shader));
 
+    GLCall(int location = glGetUniformLocation(shader, "u_color"));
+    ASSERT(location != -1);
+    GLCall(glUniform4f(location, 0.8f, 0.3f, 0.8f, 1.0f));
+    float r = 0.0f;
+    float increment = 0.05f;
+
     std::cout << "Starting loop..." << std::endl;
     while (!glfwWindowShouldClose(window))
     {
         GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
+        GLCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f))
         GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+
+        if (r > 1.0f)
+            increment = -0.05f;
+        else if (r < 0.0f)
+            increment = 0.05f;
+        r += increment;
 
         GLCall(glfwSwapBuffers(window));
         GLCall(glfwPollEvents());
