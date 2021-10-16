@@ -31,18 +31,12 @@ static ShaderProgramSource parse_shader(const std::string &file_path)
         if (line.find("#shader") != std::string::npos)
         {
             if (line.find("vertex") != std::string::npos)
-            {
                 type = ShaderType::VERTEX;
-            }
             else if (line.find("fragment") != std::string::npos)
-            {
                 type = ShaderType::FRAGMENT;
-            }
         }
         else
-        {
             ss[(int)type] << line << std::endl;
-        }
     }
 
     return {ss[0].str(), ss[1].str()};
@@ -157,6 +151,13 @@ int main(void)
     GLCall(int location = glGetUniformLocation(shader, "u_color"));
     ASSERT(location != -1);
     GLCall(glUniform4f(location, 0.8f, 0.3f, 0.8f, 1.0f));
+
+    /* unbind everything */
+    GLCall(glUseProgram(0));
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+
+    /* for my uniform */
     float r = 0.0f;
     float increment = 0.05f;
 
@@ -165,9 +166,22 @@ int main(void)
     {
         GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
-        GLCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f))
+        /* set the shader, specify the uniform */
+        GLCall(glUseProgram(shader));
+        GLCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f));
+
+        /* set up vertex array and declare its specs */
+        GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer_id));
+        GLCall(glEnableVertexAttribArray(0));
+        GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0));
+
+        /* bind indices buffer */
+        GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
+
+        /* draw */
         GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 
+        /* increment/decrement the red value for the uniform */
         if (r > 1.0f)
             increment = -0.05f;
         else if (r < 0.0f)
