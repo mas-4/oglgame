@@ -96,6 +96,12 @@ int main(void)
     /* Initialize glfw */
     if (!glfwInit())
         return -1;
+
+    /* specify ogl profile */
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
     window = glfwCreateWindow(640, 480, "OGL", NULL, NULL);
     if (!window)
     {
@@ -129,12 +135,17 @@ int main(void)
     };
     // clang-format on
 
+    unsigned int vao;
+    GLCall(glGenVertexArrays(1, &vao));
+    GLCall(glBindVertexArray(vao));
+
     /* initialize the vertex buffer */
     unsigned int buffer_id;
     GLCall(glGenBuffers(1, &buffer_id));
     GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer_id));
     GLCall(glBufferData(GL_ARRAY_BUFFER, 4 * 2 * sizeof(float), positions, GL_STATIC_DRAW));
 
+    // here we bind the array buffer to the currently bound vertex array
     GLCall(glEnableVertexAttribArray(0));
     GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0));
 
@@ -153,6 +164,7 @@ int main(void)
     GLCall(glUniform4f(location, 0.8f, 0.3f, 0.8f, 1.0f));
 
     /* unbind everything */
+    GLCall(glBindVertexArray(0));
     GLCall(glUseProgram(0));
     GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
     GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
@@ -170,12 +182,8 @@ int main(void)
         GLCall(glUseProgram(shader));
         GLCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f));
 
-        /* set up vertex array and declare its specs */
-        GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer_id));
-        GLCall(glEnableVertexAttribArray(0));
-        GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0));
-
-        /* bind indices buffer */
+        /* bind vertices, indices buffers */
+        GLCall(glBindVertexArray(vao));
         GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
 
         /* draw */
