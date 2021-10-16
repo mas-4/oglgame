@@ -68,7 +68,9 @@ static unsigned int compile_shader(unsigned int type, const std::string &source)
         char *message = (char *)alloca(length * sizeof(char));
         glGetShaderInfoLog(id, length, &length, message);
         std::cout << "Failed to compile shader! " << (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << std::endl;
-        std::cout << "Source:\n" << "=======\n" << source << std::endl;
+        std::cout << "Source:\n"
+                  << "=======\n"
+                  << source << std::endl;
         std::cout << message << std::endl;
         glDeleteShader(id);
         return -1;
@@ -85,6 +87,7 @@ static unsigned int create_shader(const std::string &vertex_shader, const std::s
     unsigned int fs = compile_shader(GL_FRAGMENT_SHADER, fragment_shader);
     glAttachShader(program, vs);
     glAttachShader(program, fs);
+    glLinkProgram(program);
     glValidateProgram(program);
 
     glDeleteShader(vs);
@@ -130,7 +133,7 @@ int main(void)
     unsigned int buffer_id;
     glGenBuffers(1, &buffer_id);
     glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6, positions, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
 
@@ -145,7 +148,6 @@ int main(void)
         glClear(GL_COLOR_BUFFER_BIT);
 
         glDrawArrays(GL_TRIANGLES, 0, 3);
-        //glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
