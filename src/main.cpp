@@ -7,6 +7,8 @@
 #include <string>
 #include <sstream>
 
+#define BASIC_SHADER "../res/shaders/basic.shader"
+
 struct ShaderProgramSource
 {
     std::string VertexSource;
@@ -123,7 +125,7 @@ int main(void)
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
 
-    ShaderProgramSource source = parse_shader("../res/shaders/basic.shader");
+    ShaderProgramSource source = parse_shader(BASIC_SHADER);
 
     unsigned int shader = create_shader(source.VertexSource, source.FragmentSource);
     glUseProgram(shader);
@@ -136,6 +138,8 @@ int main(void)
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+
+    std::cout << "Exiting..." << std::endl;
 
     glfwTerminate();
     glDeleteProgram(shader);

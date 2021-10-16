@@ -4,11 +4,13 @@
             "name": "Linux",
             "includePath": [
                 "${default}",
-                "${workspaceFolder}/dependencies/GLFW/include"
+                "${workspaceFolder}/dependencies/GLFW/include",
+                "${workspaceFolder}/dependencies/GLEW/include",
+                "${workspaceFolder}/include"
             ],
             "compilerPath": "/usr/bin/clang",
             "cStandard": "c17",
-            "cppStandard": "c++14",
+            "cppStandard": "c++17",
             "intelliSenseMode": "linux-clang-x64",
             "configurationProvider": "ms-vscode.cmake-tools"
         }
