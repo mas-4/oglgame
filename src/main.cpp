@@ -10,7 +10,14 @@
 
 #define BASIC_SHADER "../res/shaders/basic.shader"
 
-#define ASSERT(x) if (!(x)) raise(SIGTRAP);
+#define ASSERT(x) \
+    if (!(x))     \
+        raise(SIGTRAP);
+
+#define GLCall(x)   \
+    GLClearError(); \
+    x;              \
+    ASSERT(GLLogCall(#x, __FILE__, __LINE__))
 
 static void GLClearError()
 {
@@ -18,13 +25,12 @@ static void GLClearError()
         ;
 }
 
-static bool GLLogCall()
+static bool GLLogCall(const char *function, const char *file, int line)
 {
     while (GLenum error = glGetError())
     {
-        std::cerr << "[OpenGL Error] (" << error << ")" << std::endl;
+        std::cerr << "[OpenGL Error] (" << error << ") " << function << " " << file << ":" << line << std::endl;
         return false;
-
     }
     return true;
 }
@@ -181,9 +187,7 @@ int main(void)
     {
         glClear(GL_COLOR_BUFFER_BIT);
 
-        GLClearError();
-        glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr);
-        ASSERT(GLLogCall());
+        GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 
         glfwSwapBuffers(window);
         glfwPollEvents();
