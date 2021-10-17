@@ -21,17 +21,13 @@ Texture::Texture(const std::string& filepath)
   GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 
   // level=0, border=0
-  GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA,
-      GL_UNSIGNED_BYTE, &m_LocalBuffer));
+  GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_LocalBuffer));
   GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 
   if (m_LocalBuffer) stbi_image_free(m_LocalBuffer);
 }
 
-Texture::~Texture()
-{
-  GLCall(glDeleteTextures(1, &m_RendererID));
-}
+Texture::~Texture() { GLCall(glDeleteTextures(1, &m_RendererID)); }
 
 void Texture::Bind(unsigned int slot /*= 0 */) const
 {

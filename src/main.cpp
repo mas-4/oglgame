@@ -76,10 +76,10 @@ int main(void)
   Shader shader(BASIC_SHADER);
   shader.Bind();
   shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
+  shader.SetUniform1i("u_Texture", 0);
 
   Texture texture(BASIC_TEXTURE);
   texture.Bind(); // default slot 0
-  shader.SetUniform1i("u_Texture", 0);
 
   /* unbind everything */
   va.Unbind();
