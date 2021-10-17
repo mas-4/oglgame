@@ -1,0 +1,20 @@
+BasedOnStyle: Webkit
+IndentWidth: 2
+IndentCaseLabels: true
+BreakBeforeBraces: Allman
+
+AccessModifierOffset: -2
+
+# short statements
+ColumnLimit: 80
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortEnumsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: true
+AllowShortLoopsOnASingleLine: true
+AllowShortLambdasOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: true
+AllowShortBlocksOnASingleLine: true
+
+#Cpp11BracedListStyle: false     # doesn't seem to do anything
+#13 ArrayInitializerAlignmentStyle: Right # doesn't work
+#13 InsertTrailingCommas: Wrapped
