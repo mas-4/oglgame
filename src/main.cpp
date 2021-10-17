@@ -8,10 +8,14 @@
 #include "IndexBuffer.h"
 #include "Renderer.h"
 #include "Shader.h"
+#include "Texture.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 
 #define BASIC_SHADER "../res/shaders/basic.shader"
+#define BASIC_TEXTURE "../res/textures/avatar.jpg"
+
+
 int main(void)
 {
   std::cout << "Starting..." << std::endl;
@@ -48,10 +52,10 @@ int main(void)
   /* vertices of the triangle */
   // clang-format off
   float positions[] = {
-      -0.5f, -0.5f,
-       0.5f, -0.5f,
-       0.5f,  0.5f,
-      -0.5f,  0.5f,
+      -0.5f, -0.5f, 0.0f, 0.0f,
+       0.5f, -0.5f, 1.0f, 0.0f,
+       0.5f,  0.5f, 1.0f, 1.0f,
+      -0.5f,  0.5f, 0.0f, 1.0f
   };
   unsigned int indices[] {
       0, 1, 2,
@@ -59,10 +63,11 @@ int main(void)
   };
   // clang-format on
 
-  VertexBuffer vb(positions, 4 * 2 * sizeof(float));
+  VertexBuffer vb(positions, 4 * 4 * sizeof(float));
 
   VertexArray va;
   VertexBufferLayout layout;
+  layout.Push<float>(2);
   layout.Push<float>(2);
   va.AddBuffer(vb, layout);
 
@@ -71,6 +76,10 @@ int main(void)
   Shader shader(BASIC_SHADER);
   shader.Bind();
   shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
+
+  Texture texture(BASIC_TEXTURE);
+  texture.Bind(); // default slot 0
+  shader.SetUniform1i("u_Texture", 0);
 
   /* unbind everything */
   va.Unbind();

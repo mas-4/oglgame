@@ -41,13 +41,17 @@ add_subdirectory(${src_dir})
 #    ${src_dir}/VertexBufferLayout.h)
 
 set(TARGET_SRC
-    ${src_dir}/main.cpp
+    ${src_dir}/vendor/stb_image/stb_image.cpp
+
     ${src_dir}/Assert.cpp
-    ${src_dir}/Renderer.cpp
     ${src_dir}/IndexBuffer.cpp
+    ${src_dir}/Renderer.cpp
+    ${src_dir}/Shader.cpp
+    ${src_dir}/Texture.cpp
     ${src_dir}/VertexArray.cpp
     ${src_dir}/VertexBuffer.cpp
-    ${src_dir}/Shader.cpp)
+
+    ${src_dir}/main.cpp)
 
 add_executable(oglgame ${TARGET_SRC})
 target_link_libraries(oglgame glfw glew)
