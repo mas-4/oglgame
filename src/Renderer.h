@@ -1,8 +1,10 @@
 #pragma once
 
 #define GLEW_STATIC
+// clang-format off
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+// clang-format on
 #include <csignal>
 
 #define ASSERT(x)                                                              \
