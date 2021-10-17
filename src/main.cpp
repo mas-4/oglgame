@@ -5,8 +5,8 @@
 #include <iostream>
 
 #include "Assert.h"
-#include "Renderer.h"
 #include "IndexBuffer.h"
+#include "Renderer.h"
 #include "Shader.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
@@ -78,12 +78,7 @@ int main(void)
   ib.Unbind();
   shader.Unbind();
 
-  /*
-  GLCall(glBindVertexArray(0));
-  GLCall(glUseProgram(0));
-  GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
-  GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
-  */
+  Renderer renderer;
 
   /* for my uniform */
   float r = 0.0f;
@@ -92,18 +87,13 @@ int main(void)
   std::cout << "Starting loop..." << std::endl;
   while (!glfwWindowShouldClose(window))
   {
-    GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
-    /* set the shader, specify the uniform */
+    renderer.Clear();
+
     shader.Bind();
     shader.SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
 
-    /* bind vertices, indices buffers */
-    va.Bind();
-    ib.Bind();
-
-    /* draw */
-    GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+    renderer.Draw(va, ib, shader);
 
     /* increment/decrement the red value for the uniform */
     if (r > 1.0f)
@@ -112,8 +102,8 @@ int main(void)
       increment = 0.05f;
     r += increment;
 
-    GLCall(glfwSwapBuffers(window));
-    GLCall(glfwPollEvents());
+    glfwSwapBuffers(window);
+    glfwPollEvents();
   }
 
   std::cout << "Exiting..." << std::endl;
