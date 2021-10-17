@@ -63,6 +63,10 @@ int main(void)
   };
   // clang-format on
 
+  // Enable blending for transparency
+  GLCall(glEnable(GL_BLEND));
+  GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
   VertexBuffer vb(positions, 4 * 4 * sizeof(float));
 
   VertexArray va;
