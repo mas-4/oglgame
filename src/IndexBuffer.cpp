@@ -1,27 +1,25 @@
 #include "IndexBuffer.h"
 #include "Renderer.h"
 
- // what is this
+// what is this
 IndexBuffer::IndexBuffer(const unsigned int* data, unsigned int count)
     : m_Count(count)
 {
-    ASSERT(sizeof(unsigned int) == sizeof(GLuint));
-    GLCall(glGenBuffers(1, &m_RendererID));
-    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID));
-    GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), data, GL_STATIC_DRAW));
+  ASSERT(sizeof(unsigned int) == sizeof(GLuint));
+  GLCall(glGenBuffers(1, &m_RendererID));
+  GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID));
+  GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int),
+      data, GL_STATIC_DRAW));
 }
 
-IndexBuffer::~IndexBuffer()
-{
-    GLCall(glDeleteBuffers(1, &m_RendererID));
-}
+IndexBuffer::~IndexBuffer() { GLCall(glDeleteBuffers(1, &m_RendererID)); }
 
 void IndexBuffer::Bind() const
 {
-    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID));
+  GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID));
 }
 
 void IndexBuffer::Unbind() const // what is this
 {
-    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+  GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 }
