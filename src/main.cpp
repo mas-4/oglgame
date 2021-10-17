@@ -132,19 +132,17 @@ int main(void)
 
   /* vertices of the triangle */
   // clang-format off
-    float positions[] = {
-        -0.5f, -0.5f,
-         0.5f, -0.5f,
-         0.5f,  0.5f,
-        -0.5f,  0.5f,
-    };
-    unsigned int indices[] {
-        0, 1, 2,
-        2, 3, 0
-    };
+  float positions[] = {
+      -0.5f, -0.5f,
+       0.5f, -0.5f,
+       0.5f,  0.5f,
+      -0.5f,  0.5f,
+  };
+  unsigned int indices[] {
+      0, 1, 2,
+      2, 3, 0
+  };
   // clang-format on
-
-  unsigned int vao;
 
   VertexBuffer vb(positions, 4 * 2 * sizeof(float));
 
