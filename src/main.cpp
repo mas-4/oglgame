@@ -1,8 +1,11 @@
-#include "Renderer.h"
-
+#define GLEW_STATIC
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include <csignal>
 #include <iostream>
 
+#include "Assert.h"
+#include "Renderer.h"
 #include "IndexBuffer.h"
 #include "Shader.h"
 #include "VertexArray.h"

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Assert.h"
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 

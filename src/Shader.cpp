@@ -1,8 +1,4 @@
-#include "Renderer.h"
 #include "Shader.h"
-#include <iostream>
-#include <fstream>
-#include <sstream>
 
 Shader::Shader(const std::string& filepath)
     : m_FilePath(filepath)
@@ -14,17 +10,12 @@ Shader::Shader(const std::string& filepath)
 
 Shader::~Shader() { GLCall(glDeleteProgram(m_RendererID)); }
 
-void Shader::Bind() const
-{
-  GLCall(glUseProgram(m_RendererID));
-}
+void Shader::Bind() const { GLCall(glUseProgram(m_RendererID)); }
 
-void Shader::Unbind() const
-{
-  GLCall(glUseProgram(0));
-}
+void Shader::Unbind() const { GLCall(glUseProgram(0)); }
 
-void Shader::SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3)
+void Shader::SetUniform4f(
+    const std::string& name, float v0, float v1, float v2, float v3)
 {
   GLCall(glUniform4f(GetUniformLocation(name), v0, v1, v2, v3));
 }
@@ -41,7 +32,8 @@ unsigned int Shader::GetUniformLocation(const std::string& name)
 
   GLCall(int location = glGetUniformLocation(m_RendererID, name.c_str()));
   if (location == -1)
-    std::cout << "Warning: uniform '" << name << "' doesn't exist!" << std::endl;
+    std::cout << "Warning: uniform '" << name << "' doesn't exist!"
+              << std::endl;
 
   // if it stores -1 doesn't that become a problem when we do want to set it?
   m_UniformLocationCache[name] = location;

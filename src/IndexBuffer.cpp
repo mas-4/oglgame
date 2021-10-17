@@ -1,5 +1,4 @@
 #include "IndexBuffer.h"
-#include "Renderer.h"
 
 // what is this
 IndexBuffer::IndexBuffer(const unsigned int* data, unsigned int count)

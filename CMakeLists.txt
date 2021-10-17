@@ -42,6 +42,7 @@ add_subdirectory(${src_dir})
 
 set(TARGET_SRC
     ${src_dir}/main.cpp
+    ${src_dir}/Assert.cpp
     ${src_dir}/Renderer.cpp
     ${src_dir}/IndexBuffer.cpp
     ${src_dir}/VertexArray.cpp

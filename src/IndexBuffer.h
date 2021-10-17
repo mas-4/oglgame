@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Assert.h"
+
 class IndexBuffer
 {
 private:
