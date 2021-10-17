@@ -32,7 +32,33 @@ public:
   VertexBufferLayout()
       : m_Stride(0) {};
 
-  template <typename T> void Push(unsigned int count) { static_assert(false); }
+  /*
+   * In windows world I believe static_assert(false) will only trigger if the
+   * program is compiled to call the function. I.e., if there's anywhere in the
+   * program that the function VertexBufferLayout::Push<T> is called (for which
+   * there is not a specialization). In Linux world, at least with clang (I
+   * can't speak to GCC because GCC won't acknowledge c++14 declaration that
+   * explicit specialization can be declared in any scope as below; this only
+   * compiles on clang), having this static_assert fails to compile. This is
+   * just a theory because Jesus Christ, it won't compile, but in the tutorial
+   * it does. The least I can do is add a ASSERT(false) for a runtime error.
+   *
+   * On the other hand, it may be another issue: not that there is no call to
+   * this function, but rather that the compiler interprets any call to the
+   * specializations as being calls to this function first.
+   *
+   * Idea for an experiment: a function that static_assert but is not called.
+   *
+   * Nope, verified, static_assert(false) will always prevent compilation.
+   * Crazy, that would be handy.
+   *
+   * - Michael.
+   */
+  template <typename T> void Push(unsigned int count)
+  {
+    /* static_assert(false) */
+    ASSERT(false);
+  }
 
   template <> void Push<float>(unsigned int count)
   {

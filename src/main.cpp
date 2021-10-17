@@ -6,10 +6,9 @@
 #include <sstream>
 #include <string>
 
-
 #include "IndexBuffer.h"
-#include "VertexBuffer.h"
 #include "VertexArray.h"
+#include "VertexBuffer.h"
 
 #define BASIC_SHADER "../res/shaders/basic.shader"
 
