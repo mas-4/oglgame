@@ -61,6 +61,19 @@ public:
     ASSERT(false);
   }
 
+  /* As of C++14 you can declare a template specialization in any namespace.
+   * Unfortunately, GCC ignores this fact, so we have to compile with clang++.
+   * More unfortunately, VS Code's CMake/CPP extensions are somewhat bugged when
+   * selecting the clang kit, because it ends up building with /usr/bin/c++. You
+   * have to actually edit the kit file
+   * `/home/<usr>/.local/share/CMakeTools/cmake-tools-kits.json` to properly
+   * enable clang++. Even *more* unfortunately, it seems you can't prevent the
+   * editor from issuing GCC warnings here, so I just gave up and left the
+   * squiggles. Every project has problems, I guess, because the problems are
+   * bugged.
+   *
+   * - Michael.
+   */
   template <> void Push<float>(unsigned int count)
   {
     m_Elements.push_back({ GL_FLOAT, count, GL_FALSE });
