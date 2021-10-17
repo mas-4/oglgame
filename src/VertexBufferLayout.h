@@ -50,7 +50,8 @@ public:
    * Idea for an experiment: a function that static_assert but is not called.
    *
    * Nope, verified, static_assert(false) will always prevent compilation.
-   * Crazy, that would be handy.
+   * Crazy, that would be handy. I really want to ask either Stack Overflow or
+   * Juan about this. I could test it in Visual Studio I suppose.
    *
    * - Michael.
    */
@@ -63,19 +64,19 @@ public:
   template <> void Push<float>(unsigned int count)
   {
     m_Elements.push_back({ GL_FLOAT, count, GL_FALSE });
-    m_Stride += VertexBufferElement::GetSizeOfType(GL_FLOAT);
+    m_Stride += VertexBufferElement::GetSizeOfType(GL_FLOAT) * count;
   }
 
   template <> void Push<unsigned int>(unsigned int count)
   {
     m_Elements.push_back({ GL_UNSIGNED_INT, count, GL_FALSE });
-    m_Stride += VertexBufferElement::GetSizeOfType(GL_UNSIGNED_INT);
+    m_Stride += VertexBufferElement::GetSizeOfType(GL_UNSIGNED_INT) * count;
   }
 
   template <> void Push<unsigned char>(unsigned int count)
   {
     m_Elements.push_back({ GL_UNSIGNED_BYTE, count, GL_TRUE });
-    m_Stride += VertexBufferElement::GetSizeOfType(GL_UNSIGNED_BYTE);
+    m_Stride += VertexBufferElement::GetSizeOfType(GL_UNSIGNED_BYTE) * count;
   }
 
   inline const std::vector<VertexBufferElement> GetElements() const
