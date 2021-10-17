@@ -36,13 +36,15 @@ add_subdirectory(${src_dir})
 set(TARGET_H
     ${src_dir}/Renderer.h
     ${src_dir}/IndexBuffer.h
+    ${src_dir}/VertexArray.h
     ${src_dir}/VertexBuffer.h
-)
+    ${src_dir}/VertexBufferLayout.h)
 
 set(TARGET_SRC
     ${src_dir}/main.cpp
     ${src_dir}/Renderer.cpp
     ${src_dir}/IndexBuffer.cpp
+    ${src_dir}/VertexArray.cpp
     ${src_dir}/VertexBuffer.cpp)
 
 add_executable(oglgame ${TARGET_SRC})
