@@ -63,6 +63,9 @@ public:
 
   /* As of C++14 you can declare a template specialization in any namespace.
    * Unfortunately, GCC ignores this fact, so we have to compile with clang++.
+   *
+   * cf: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=85282
+   *
    * More unfortunately, VS Code's CMake/CPP extensions are somewhat bugged when
    * selecting the clang kit, because it ends up building with /usr/bin/c++. You
    * have to actually edit the kit file
