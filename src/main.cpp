@@ -166,10 +166,17 @@ int main(void)
   GLCall(glUniform4f(location, 0.8f, 0.3f, 0.8f, 1.0f));
 
   /* unbind everything */
+  va.Unbind();
+  GLCall(glUseProgram(0));
+  vb.Unbind();
+  ib.Unbind();
+
+  /*
   GLCall(glBindVertexArray(0));
   GLCall(glUseProgram(0));
   GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
   GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+  */
 
   /* for my uniform */
   float r = 0.0f;
