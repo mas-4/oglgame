@@ -24,15 +24,13 @@ set(glfw_dir ${deps}/GLFW/)
 set(glew_dir ${deps}/GLEW/)
 set(glm_dir ${deps}/glm_root_include/)
 set(imgui_dir ${deps}/IMGUI)
+set(stb_image ${src_dir}/vendor/stb_image/stb_image.cpp)
 
 set(imgui_src
     ${imgui_dir}/imgui.cpp
     ${imgui_dir}/imgui_demo.cpp
     ${imgui_dir}/imgui_draw.cpp
-    ${imgui_dir}/imgui_tables.cpp
-    ${imgui_dir}/imgui_widgets.cpp)
-
-add_library(imgui STATIC ${imgui_src})
+    ${imgui_dir}/imgui_impl_glfw_gl3.cpp)
 
 
 # Disabling some glfw files
@@ -46,8 +44,7 @@ add_subdirectory(${glew_dir}/build/cmake)
 add_subdirectory(${src_dir})
 
 set(TARGET_SRC
-    ${src_dir}/vendor/stb_image/stb_image.cpp
-
+    ${stb_image}
     ${src_dir}/Assert.cpp
     ${src_dir}/IndexBuffer.cpp
     ${src_dir}/Renderer.cpp
@@ -58,8 +55,8 @@ set(TARGET_SRC
 
     ${src_dir}/main.cpp)
 
-add_executable(oglgame ${TARGET_SRC} ${imgui})
-target_link_libraries(oglgame glfw glew imgui)
+add_executable(oglgame ${TARGET_SRC} ${imgui_src})
+target_link_libraries(oglgame glfw glew)
 target_include_directories(oglgame PUBLIC
     ${glfw_dir}/include
     ${glew_dir}/include
