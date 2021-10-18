@@ -59,4 +59,5 @@ target_link_libraries(oglgame glfw glew)
 target_include_directories(oglgame PUBLIC
     ${glfw_dir}/include
     ${glew_dir}/include
-    ${glm_dir})
+    ${glm_dir}
+    ${src_dir}/vendor)
