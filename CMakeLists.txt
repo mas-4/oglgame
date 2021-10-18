@@ -23,6 +23,17 @@ set(src_dir ${CMAKE_SOURCE_DIR}/src)
 set(glfw_dir ${deps}/GLFW/)
 set(glew_dir ${deps}/GLEW/)
 set(glm_dir ${deps}/glm_root_include/)
+set(imgui_dir ${deps}/IMGUI)
+
+set(imgui_src
+    ${imgui_dir}/imgui.cpp
+    ${imgui_dir}/imgui_demo.cpp
+    ${imgui_dir}/imgui_draw.cpp
+    ${imgui_dir}/imgui_tables.cpp
+    ${imgui_dir}/imgui_widgets.cpp)
+
+add_library(imgui STATIC ${imgui_src})
+
 
 # Disabling some glfw files
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
@@ -33,13 +44,6 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 add_subdirectory(${glfw_dir})
 add_subdirectory(${glew_dir}/build/cmake)
 add_subdirectory(${src_dir})
-
-#set(TARGET_H
-#    ${src_dir}/Renderer.h
-#    ${src_dir}/IndexBuffer.h
-#    ${src_dir}/VertexArray.h
-#    ${src_dir}/VertexBuffer.h
-#    ${src_dir}/VertexBufferLayout.h)
 
 set(TARGET_SRC
     ${src_dir}/vendor/stb_image/stb_image.cpp
@@ -54,10 +58,11 @@ set(TARGET_SRC
 
     ${src_dir}/main.cpp)
 
-add_executable(oglgame ${TARGET_SRC})
-target_link_libraries(oglgame glfw glew)
+add_executable(oglgame ${TARGET_SRC} ${imgui})
+target_link_libraries(oglgame glfw glew imgui)
 target_include_directories(oglgame PUBLIC
     ${glfw_dir}/include
     ${glew_dir}/include
     ${glm_dir}
+    ${imgui_dir}
     ${src_dir}/vendor)
