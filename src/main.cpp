@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <csignal>
 #include <iostream>
+#include "GLM/glm.hpp"
 
 #include "Assert.h"
 #include "IndexBuffer.h"

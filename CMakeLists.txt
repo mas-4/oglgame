@@ -22,7 +22,7 @@ set(src_dir ${CMAKE_SOURCE_DIR}/src)
 # dependencies
 set(glfw_dir ${deps}/GLFW/)
 set(glew_dir ${deps}/GLEW/)
-set(glm_dir ${deps}/glm/)
+set(glm_dir ${deps}/glm_root_include/)
 
 # Disabling some glfw files
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
