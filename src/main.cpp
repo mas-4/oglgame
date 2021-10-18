@@ -1,9 +1,10 @@
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <GLM/glm.hpp>
+#include <GLM/gtc/matrix_transform.hpp>
 #include <csignal>
 #include <iostream>
-#include "GLM/glm.hpp"
 
 #include "Assert.h"
 #include "IndexBuffer.h"
@@ -31,7 +32,7 @@ int main(void)
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-  window = glfwCreateWindow(640, 480, "OGL", NULL, NULL);
+  window = glfwCreateWindow(800, 600, "OpenGL", NULL, NULL);
   if (!window)
   {
     glfwTerminate();
@@ -78,10 +79,13 @@ int main(void)
 
   IndexBuffer ib(indices, 6);
 
+  glm::mat4 proj = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f);
+
   Shader shader(BASIC_SHADER);
   shader.Bind();
   shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
   shader.SetUniform1i("u_Texture", 0);
+  shader.SetUniformMat4f("u_MVP", proj);
 
   Texture texture(BASIC_TEXTURE);
   texture.Bind(); // default slot 0
