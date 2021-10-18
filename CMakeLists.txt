@@ -22,6 +22,7 @@ set(src_dir ${CMAKE_SOURCE_DIR}/src)
 # dependencies
 set(glfw_dir ${deps}/GLFW/)
 set(glew_dir ${deps}/GLEW/)
+set(glm_dir ${deps}/glm/)
 
 # Disabling some glfw files
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
@@ -57,4 +58,5 @@ add_executable(oglgame ${TARGET_SRC})
 target_link_libraries(oglgame glfw glew)
 target_include_directories(oglgame PUBLIC
     ${glfw_dir}/include
-    ${glew_dir}/include)
+    ${glew_dir}/include
+    ${glm_dir})
