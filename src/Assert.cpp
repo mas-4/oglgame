@@ -8,7 +8,7 @@ void GLClearError()
 
 bool GLLogCall(const char* function, const char* file, int line)
 {
-  while (GLenum error = glGetError())
+  while (GLenum error == glGetError())
   {
     std::cerr << "[OpenGL Error] (" << error << ") " << function << " " << file
               << ":" << line << std::endl;

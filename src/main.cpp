@@ -22,7 +22,7 @@
 #define RES_X 960
 #define RES_Y 540
 
-GLFWwindow* init_graphics_system(void)
+GLFWwindow* init_graphics_system()
 {
   std::cout << "Starting System..." << std::endl;
   GLFWwindow* window;
@@ -37,7 +37,7 @@ GLFWwindow* init_graphics_system(void)
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-  window = glfwCreateWindow(RES_X, RES_Y, "OpenGL", NULL, NULL);
+  window = glfwCreateWindow(RES_X, RES_Y, "OpenGL", nullptr, nullptr);
   if (!window)
   {
     glfwTerminate();
@@ -64,7 +64,7 @@ GLFWwindow* init_graphics_system(void)
   return window;
 }
 
-int main(void)
+int main()
 {
   GLFWwindow* window = init_graphics_system();
   /* vertices of the triangle */
@@ -114,9 +114,9 @@ int main(void)
   ImGui_ImplGlfwGL3_Init(window, true);
   ImGui::StyleColorsDark();
   glm::vec3 translation(200, 200, 0);
-  bool show_demo_window = true;
-  bool show_another_window = false;
-  ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+  //bool show_demo_window = true;
+  //bool show_another_window = false;
+  //ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
   /* for my uniform */
   float r = 0.0f;
   float increment = 0.05f;
